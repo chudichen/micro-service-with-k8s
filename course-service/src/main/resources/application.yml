@@ -1,0 +1,7 @@
+server:
+  port: 8801
+spring:
+  profiles:
+    active: local
+  application:
+    name: message-spring-cloud-service
