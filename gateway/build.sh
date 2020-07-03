@@ -7,3 +7,5 @@ docker_name="registry.cn-hangzhou.aliyuncs.com/micro-service-study/gateway:${doc
 
 docker build -t ${docker_name} .
 docker push ${docker_name}
+
+docker images|grep none|awk '{print $3 }'|xargs docker rmi

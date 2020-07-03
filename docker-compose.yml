@@ -1,46 +1,85 @@
 version: '3'
 
-networks:
-  default:
-    external:
-      name: imooc-network
+#networks:
+#  default:
+#    external:
+#      name: imooc-network
 
 services:
-  message-service:
-    image: message-service:latest
-
-  user-service:
-    image: user-service:latest
-    command:
-      - "--mysql.address=172.19.0.2"
-
-  user-edge-service:
-    image: user-edge-service:latest
-    links:
-      - user-service
-      - message-service
-    command:
-      - "--redis.address=172.19.0.3"
-
-  course-service:
-    image: course-service:latest
-    links:
-      - user-service
-    command:
-      - "--mysql.address=172.19.0.2"
-      - "--zookeeper.address=172.19.0.4"
-
-  course-edge-service:
-    image: course-edge-service:latest
-    links:
-      - user-edge-service
-    command:
-      - "--zookeeper.address=172.19.0.4"
-
-  api-gateway-zuul:
-    image: api-gateway-zuul:latest
-    links:
-      - course-edge-service
-      - user-edge-service
+  mysql:
+    container_name: mysql
+    image: mysql:latest
     ports:
-      - 8080:8080
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+    volumes:
+      - ./volumes/db:/var/lib/mysql
+      - ./volumes/conf/my.cnf:/etc/my.cnf
+      - ./volumes/init:/docker-entrypoint-initdb.d/
+  eureka:
+    container_name: eureka
+    image: registry.cn-hangzhou.aliyuncs.com/micro-service-study/eureka:latest
+    ports:
+      - 8761:8761
+  gateway:
+    container_name: gateway
+    image: registry.cn-hangzhou.aliyuncs.com/micro-service-study/gateway:latest
+    ports:
+      - 8805:8805
+    links:
+      - eureka
+  user-edge-service:
+    container_name: user-edge-service
+    image: registry.cn-hangzhou.aliyuncs.com/micro-service-study/user-edge-service:latest
+    links:
+      - eureka
+  user-service:
+    container_name: user-service
+    image: registry.cn-hangzhou.aliyuncs.com/micro-service-study/user-service:latest
+    command:
+      - --mysql.address=mysql
+      - --mysql.username=root
+      - --mysql.password=root
+      - --spring.profiles.active=test
+    links:
+      - eureka
+
+#  message-service:
+#    image: message-service:latest
+#
+#  user-service:
+#    image: user-service:latest
+#    command:
+#      - "--mysql.address=172.19.0.2"
+#
+#  user-edge-service:
+#    image: user-edge-service:latest
+#    links:
+#      - user-service
+#      - message-service
+#    command:
+#      - "--redis.address=172.19.0.3"
+#
+#  course-service:
+#    image: course-service:latest
+#    links:
+#      - user-service
+#    command:
+#      - "--mysql.address=172.19.0.2"
+#      - "--zookeeper.address=172.19.0.4"
+#
+#  course-edge-service:
+#    image: course-edge-service:latest
+#    links:
+#      - user-edge-service
+#    command:
+#      - "--zookeeper.address=172.19.0.4"
+#
+#  api-gateway-zuul:
+#    image: api-gateway-zuul:latest
+#    links:
+#      - course-edge-service
+#      - user-edge-service
+#    ports:
+#      - 8080:8080
