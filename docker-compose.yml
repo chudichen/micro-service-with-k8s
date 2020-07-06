@@ -45,9 +45,7 @@ services:
     links:
       - eureka
 
-#  message-service:
-#    image: message-service:latest
-#
+
 #  user-service:
 #    image: user-service:latest
 #    command:
