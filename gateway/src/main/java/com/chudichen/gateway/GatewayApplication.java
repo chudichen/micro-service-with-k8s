@@ -28,7 +28,8 @@ public class GatewayApplication {
     public RouteLocator authorizationLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(r -> r.path(USER_PATH + "/**")
-                        .uri("lb://USER-EDGE-SERVICE")
+//                        .uri("lb://USER-EDGE-SERVICE")
+                        .uri("http://USER-EDGE-SERVICE")
                         .order(2)
                         .id("client-route")
                 ).build();

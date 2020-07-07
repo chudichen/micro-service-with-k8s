@@ -1,0 +1,6 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka.default.svc:8761/eureka/
+    healthcheck:
+      enabled: false
