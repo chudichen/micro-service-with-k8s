@@ -10,9 +10,9 @@ spec:
     app: eureka
   ports:
     - name: provider
-      port: 32222
+      port: 8761
       targetPort: 8761
-      nodePort: 32222
+      nodePort: 30061
 
 ---
 apiVersion: apps/v1
@@ -55,3 +55,45 @@ spec:
           image: registry.cn-hangzhou.aliyuncs.com/micro-service-study/eureka:latest
           ports:
             - containerPort: 8761
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+spec:
+  selector:
+    matchLabels:
+      app: user-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          image: registry.cn-hangzhou.aliyuncs.com/micro-service-study/user-service:latest
+          ports:
+            - containerPort: 8803
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-edge-service
+spec:
+  selector:
+    matchLabels:
+      app: user-edge-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: user-edge-service
+    spec:
+      containers:
+        - name: user-edge-service
+          image: registry.cn-hangzhou.aliyuncs.com/micro-service-study/user-edge-service:latest
+          ports:
+            - containerPort: 8804
