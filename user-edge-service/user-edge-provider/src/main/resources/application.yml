@@ -4,4 +4,4 @@ spring:
   application:
     name: user-edge-service
   profiles:
-    active: test
+    active: ${active:local}
