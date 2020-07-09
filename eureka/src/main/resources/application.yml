@@ -1,7 +1,16 @@
+# 服务名称
+spring:
+  application:
+    name: ${EUREKA_APPLICATION_NAME:eureka}
+
+
 server:
   port: 8761
 
 eureka:
+  instance:
+    appname: ${spring.application.name:eureka}
+    prefer-ip-address: true
   client:
     registerWithEureka: false
     fetchRegistry: false
