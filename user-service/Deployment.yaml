@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+spec:
+  selector:
+    matchLabels:
+      app: user-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          imagePullPolicy: Always
+          image: registry.cn-hangzhou.aliyuncs.com/micro-service-study/user-service:latest
+          env:
+            - name: eureka_host
+              value: "eureka.default.svc.cluster.local"
+            - name: eureka_port
+              value: "8761"
+            - name: spring.profiles.active
+              value: "prod"
+            - name: mysql.address
+              value: 172.23.0.1
+            - name: mysql.username
+              value: "root"
+            - name: mysql.password
+              value: "root"

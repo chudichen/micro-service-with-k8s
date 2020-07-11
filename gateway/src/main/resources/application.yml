@@ -6,3 +6,7 @@ spring:
     name: gateway
   profiles:
     active: ${active:local}
+
+eureka:
+  instance:
+    prefer-ip-address: true

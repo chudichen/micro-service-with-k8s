@@ -1,0 +1,57 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: course-service
+spec:
+  selector:
+    matchLabels:
+      app: course-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: course-service
+    spec:
+      containers:
+        - name: course-service
+          image: registry.cn-hangzhou.aliyuncs.com/micro-service-study/course-service:latest
+          ports:
+            - containerPort: 8803
+          env:
+            - name: active
+              value: "prod"
+            - name: eureka_host
+              value: "eureka.default.svc.cluster.local"
+            - name: eureka_port
+              value: "8761"
+
+# user-edge-service Deployment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: course-service
+spec:
+  selector:
+    matchLabels:
+      app: user-edge-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: user-edge-service
+    spec:
+      containers:
+        - name: user-edge-service
+          imagePullPolicy: Always
+          image: registry.cn-hangzhou.aliyuncs.com/micro-service-study/user-edge-service:latest
+          ports:
+            - containerPort: 8804
+          env:
+            - name: active
+              value: "prod"
+            - name: eureka_host
+              value: "eureka.default.svc.cluster.local"
+            - name: eureka_port
+              value: "8761"

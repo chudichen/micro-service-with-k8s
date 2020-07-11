@@ -3,3 +3,7 @@ server:
 spring:
   application:
     name: message-spring-cloud-service
+
+eureka:
+  instance:
+    prefer-ip-address: true

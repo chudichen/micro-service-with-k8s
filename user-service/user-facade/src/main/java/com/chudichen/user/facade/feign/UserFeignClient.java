@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Michael Chu
  * @since 2020-06-27 13:24
  */
-@FeignClient(name="user-service", fallback = UserFeignClientFallback.class)
 @RequestMapping("/user")
+@FeignClient(name="user-service", fallback = UserFeignClientFallback.class)
 public interface UserFeignClient {
 
     /**

@@ -4,4 +4,8 @@ spring:
   application:
     name: user-edge-service
   profiles:
-    active: ${active:local}
+    active: local
+
+eureka:
+  instance:
+    prefer-ip-address: true

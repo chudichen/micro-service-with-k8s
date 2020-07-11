@@ -5,3 +5,7 @@ spring:
     name: user-service
   profiles:
     active: local
+
+eureka:
+  instance:
+    prefer-ip-address: true
