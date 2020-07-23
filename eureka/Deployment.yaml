@@ -19,6 +19,13 @@ spec:
           image: registry.cn-hangzhou.aliyuncs.com/micro-service-study/eureka:latest
           ports:
             - containerPort: 8761
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 300m
+            limits:
+              memory: 512Mi
+              cpu: 300m
 ## eureka Service
 ---
 apiVersion: v1

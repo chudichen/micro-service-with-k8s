@@ -29,3 +29,10 @@ spec:
               value: "root"
             - name: mysql.password
               value: "root"
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 300m
+            limits:
+              memory: 512Mi
+              cpu: 300m

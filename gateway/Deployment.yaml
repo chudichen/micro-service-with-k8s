@@ -26,7 +26,13 @@ spec:
               value: "eureka.default.svc.cluster.local"
             - name: eureka_port
               value: "8761"
-
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 300m
+            limits:
+              memory: 512Mi
+              cpu: 300m
 ---
 apiVersion: v1
 kind: Service
